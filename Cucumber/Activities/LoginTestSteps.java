@@ -1,4 +1,4 @@
-public class LoginSteps {
+public class LoginTestSteps {
     WebDriver driver;
     WebDriverWait wait;
     
@@ -21,7 +21,7 @@ public class LoginSteps {
         //Click Login
         driver.findElement(By.xpath("//button[@type='submit']")).click();
     }
-    
+
     @When("^User enters \"(.*)\" and \"(.*)\"$")
     public void user_enters_and(String username, String password) throws Throwable {
         //Enter username from Feature file
@@ -43,9 +43,12 @@ public class LoginSteps {
         //Print the page title and heading
         System.out.println("Page title is: " + pageTitle);
         System.out.println("Login message is: " + confirmMessage);
-
-        //Assertion
-        Assert.assertEquals(confirmMessage, "Welcome Back, admin");
+        
+        if(confirmMessage.contains("admin")) {
+            Assert.assertEquals(confirmMessage, "Welcome Back, admin");
+        } else {
+            Assert.assertEquals(confirmMessage, "Invalid Credentials");
+        }
     }
     
     @And("^Close the Browser$")
